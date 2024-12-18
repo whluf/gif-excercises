@@ -1,8 +1,11 @@
-import { View, Text, ScrollView, Pressable } from "react-native";
+import { View, Text, ScrollView, Pressable, StyleSheet } from "react-native";
 import { useLocalSearchParams, useRouter } from "expo-router";
+import Animated from "react-native-reanimated";
 
 import { Image } from "expo-image";
-import Animated from "react-native-reanimated";
+
+import ExerciseTimer from "../components/ExerciseTimer";
+import { useRoutinesStore } from "./store/routinesStore";
 
 import {
   widthPercentageToDP as wp,
@@ -14,16 +17,35 @@ export default function ExerciseDetails() {
   const router = useRouter();
   const { gif, name, instructions, target, equipment, id, secondaryMuscles } =
     useLocalSearchParams();
+  const { addExerciseToRoutine } = useRoutinesStore();
+
+  const handleAddToRoutine = () => {
+    addExerciseToRoutine({
+      id,
+      name,
+      equipment,
+      target,
+      instructions,
+      secondaryMuscles,
+      gif,
+    });
+    alert(`${name} se agregó a tu rutina! 💪`);
+  };
 
   return (
     <View className="flex flex-1">
       <View className="rounded-b-[40px] bg-neutral-200 shadow-md">
+        {/* temporizador */}
+        <ExerciseTimer duration={60} />
         <Image
           source={{ uri: gif }}
-          style={{ width: wp(100), height: wp(100) }}
+          style={{ width: wp(100), height: wp(80) }}
           contentFit="cover"
           className="rounded-b-[40px]"
         />
+        <Pressable onPress={handleAddToRoutine} style={styles.addButton}>
+          <Text style={styles.addButtonText}>Agregar a la rutina</Text>
+        </Pressable>
       </View>
       <Pressable
         onPress={() => router.back()}
@@ -84,3 +106,32 @@ export default function ExerciseDetails() {
     </View>
   );
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    padding: 20,
+    backgroundColor: "#ffffff",
+  },
+  title: {
+    fontSize: 24,
+    fontWeight: "bold",
+    marginBottom: 10,
+  },
+  detail: {
+    fontSize: 16,
+    marginBottom: 5,
+  },
+  addButton: {
+    backgroundColor: "#28a745",
+    padding: 15,
+    borderRadius: 8,
+    alignItems: "center",
+    marginTop: 20,
+  },
+  addButtonText: {
+    color: "#ffffff",
+    fontWeight: "bold",
+    fontSize: 16,
+  },
+});

@@ -34,7 +34,7 @@ Follow these steps to install and run the app locally:
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/tu_usuario/tu_repositorio.git
+   git clone https://github.com/whluf/gif-excercises.git
 
 2. Navigate to the project directory:
     ```bash
@@ -124,7 +124,7 @@ Sigue estos pasos para instalar y ejecutar la aplicación localmente:
 
 1. Clona el repositorio:
    ```bash
-   git clone https://github.com/tu_usuario/tu_repositorio.git
+   git clone https://github.com/whluf/gif-excercises.git
 2. Navega al directorio del proyecto:
     ```bash
     cd tu_repositorio
